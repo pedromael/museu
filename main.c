@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     // Inicialize as pessoas com direções e velocidades aleatórias
     int total_pessoas = 0;
     int capacidade = 10; // Capacidade inicial
-    int populacao_inicial = 30;
+    int populacao_inicial = 20;
 
     // Aloca memória dinamicamente para o array de pessoas
     pessoa *pessoas = malloc(capacidade * sizeof(pessoa));
