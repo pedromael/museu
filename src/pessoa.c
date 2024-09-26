@@ -15,15 +15,15 @@ int verificar_habitabilidade(int x, int y, mapa *mapas, int num_mapas) {
 }
 
 // Verifica se há pessoas próximas
-void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas[], int *total_pessoas, int *capacidade) {
+void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas, int *total_pessoas, int *capacidade) {
     int raio = 10;
-    printf("verificacao de pessoa a volta:");
+    //printf("verificacao de pessoa a volta:");
     for (int i = 0; i < *total_pessoas; i++) {
         if (i != pessoa1->id) {
-            int diffX = abs(pessoa1->x - pessoas[i]->x);
-            int diffY = abs(pessoa1->y - pessoas[i]->y);
+            int diffX = abs(pessoa1->x - pessoas[i].x);
+            int diffY = abs(pessoa1->y - pessoas[i].y);
             if (diffX <= raio && diffY <= raio) {
-                //interagir(pessoa1, i, pessoas, total_pessoas, capacidade);
+                interagir(pessoa1, i, pessoas, total_pessoas, capacidade);
                 break;
             }
         }
@@ -39,19 +39,19 @@ void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p) {
 }
 
 // Atualiza a rotina de uma pessoa
-void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas[], int *capacidade) {
+void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capacidade, int actualizacao_completa) {
     p->tamanho = 4;
     p->velocidade = rand() % 2;
-    if (*total_pessoas) {
+    if (actualizacao_completa) {
         p->x = (rand() % (WINDOW_WIDTH / p->tamanho)) * p->tamanho;
         p->y = (rand() % (WINDOW_HEIGHT / p->tamanho)) * p->tamanho;
         p->cor = (Uint8)(rand() % 256);  // Cor aleatória
         p->id = *total_pessoas;
         p->genero = calcular_probablidade(45);
-    }
+    }else verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade);
+    
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
     p->dy = (calcular_probablidade(50)) ? -1 : 1;
-    //verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade); // Passa NULL se não estiver usando capacidade
 }
 
 // Função para atualizar a posição de uma pessoa

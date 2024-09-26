@@ -21,8 +21,8 @@ int main(int argc, char* argv[]) {
 
     // Inicialize as pessoas com direções e velocidades aleatórias
     int total_pessoas = 0;
-    int capacidade = 50; // Capacidade inicial
-    int populacao_inicial = 230;
+    int capacidade = 10; // Capacidade inicial
+    int populacao_inicial = 30;
 
     // Aloca memória dinamicamente para o array de pessoas
     pessoa *pessoas = malloc(capacidade * sizeof(pessoa));
@@ -31,12 +31,12 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < populacao_inicial; i++) {
         total_pessoas++;
         if (total_pessoas >= capacidade) {
-            capacidade = populacao_inicial + 5; // Aumenta a capacidade
+            capacidade *= 2; // Aumenta a capacidade
             pessoas = realloc(pessoas, capacidade * sizeof(pessoa));
             if (pessoas == NULL)
                 return 1; 
         }
-        actualizar_rotina(&pessoas[total_pessoas], &total_pessoas, &pessoas,&capacidade);
+        actualizar_rotina(&pessoas[total_pessoas], &total_pessoas, pessoas,&capacidade,1);
     }
     int map_info[6][5] = {
         {0,0,WINDOW_WIDTH/2-30,WINDOW_HEIGHT/2,1},
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
     // Variável para controlar a frequência da mudança de direção
     const int freqMudancaDirecao = 85; // Alterar a direção a cada X atualizações
     int contadorMudancaDirecao = 0;
-    printf("inicio:");
+    printf("inicio:1\n");
     // Loop principal
     int running = 1;
     while (running) {
@@ -73,14 +73,12 @@ int main(int argc, char* argv[]) {
 
         for (int i = 0; i < 6; i++)
             desenhar_mapa(renderer,&map[i]);
-        //free(map);
-        //free(map_info);
+
         contadorMudancaDirecao++;
         if (contadorMudancaDirecao >= freqMudancaDirecao) {
             for (int i = 0; i < populacao_inicial; i++){
-                int zero = 0;
                 //printf("passou");
-                actualizar_rotina(&pessoas[i], &zero,&pessoas,&capacidade); // Atualiza direção aleatória
+                actualizar_rotina(&pessoas[i], &total_pessoas,pessoas,&capacidade,0); // Atualiza direção aleatória
                 atualizar_pessoa(&pessoas[i],map,6);
                 desenhar_pessoa(renderer, &pessoas[i]);
             }
