@@ -45,7 +45,7 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
     if (actualizacao_completa) {
         p->x = (rand() % (WINDOW_WIDTH / p->tamanho)) * p->tamanho;
         p->y = (rand() % (WINDOW_HEIGHT / p->tamanho)) * p->tamanho;
-        p->cor = (Uint8)(rand() % 256);  // Cor aleatória
+        p->cor = (Uint8)255;  // Cor aleatória
         p->id = *total_pessoas;
         p->genero = calcular_probablidade(45);
     }else verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade);

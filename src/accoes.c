@@ -19,7 +19,7 @@ void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas, int *total_pessoas
         filho->x = (pai->x + pessoas[mae].x) / 2; // Posição média dos pais
         filho->y = (pai->y + pessoas[mae].y) / 2; // Posição média dos pais
         filho->tamanho = 4; // Tamanho padrão
-        filho->cor = (Uint8)(rand() % 256); // Cor aleatória
+        filho->cor = (Uint8)150; // Cor aleatória
         filho->filiacao[0] = pai->id; // Armazena ID do pai
         filho->filiacao[1] = pessoas[mae].id; // Armazena ID da mãe
         filho->genero = rand() % 2; // Gênero aleatório para o filho
