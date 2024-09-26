@@ -41,7 +41,7 @@ void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p) {
 // Atualiza a rotina de uma pessoa
 void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas[], int *capacidade) {
     p->tamanho = 4;
-    p->velocidade = rand() % 3;
+    p->velocidade = rand() % 2;
     if (*total_pessoas) {
         p->x = (rand() % (WINDOW_WIDTH / p->tamanho)) * p->tamanho;
         p->y = (rand() % (WINDOW_HEIGHT / p->tamanho)) * p->tamanho;
@@ -51,7 +51,7 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas[], int *ca
     }
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
     p->dy = (calcular_probablidade(50)) ? -1 : 1;
-    verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade); // Passa NULL se não estiver usando capacidade
+    //verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade); // Passa NULL se não estiver usando capacidade
 }
 
 // Função para atualizar a posição de uma pessoa

@@ -21,8 +21,8 @@ int main(int argc, char* argv[]) {
 
     // Inicialize as pessoas com direções e velocidades aleatórias
     int total_pessoas = 0;
-    int capacidade = 5; // Capacidade inicial
-    int populacao_inicial = 10;
+    int capacidade = 50; // Capacidade inicial
+    int populacao_inicial = 230;
 
     // Aloca memória dinamicamente para o array de pessoas
     pessoa *pessoas = malloc(capacidade * sizeof(pessoa));
@@ -31,14 +31,10 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < populacao_inicial; i++) {
         total_pessoas++;
         if (total_pessoas >= capacidade) {
-            capacidade += 5; // Aumenta a capacidade
-            pessoa *temp = realloc(pessoas, capacidade * sizeof(pessoa));
-            if (temp == NULL) {
-                free(pessoas); // Libera a memória anterior antes de retornar
-                return 1; // Retorna 1 se a realocação falhar
-            }
-            pessoas = temp; // Atualiza o ponteiro apenas se realloc for bem-sucedido
-            free(temp);
+            capacidade = populacao_inicial + 5; // Aumenta a capacidade
+            pessoas = realloc(pessoas, capacidade * sizeof(pessoa));
+            if (pessoas == NULL)
+                return 1; 
         }
         actualizar_rotina(&pessoas[total_pessoas], &total_pessoas, &pessoas,&capacidade);
     }
