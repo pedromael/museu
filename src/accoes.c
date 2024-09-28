@@ -30,6 +30,7 @@ void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas, int *total_pessoas
         dado.cor = (Uint8)255;
         dado.id_pai = 0;
         dado.id_mae = 0;
+        dado.nacionalidade = "angola";
 
         BD_nova_pessoa(dado);
 

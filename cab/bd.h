@@ -9,8 +9,8 @@ typedef struct
 {
     int id;
     int genero;
-    int nome;
-    char nacionalidade;
+    char nome[25];
+    char nacionalidade[10];
     Uint8 cor;
     int id_pai,id_mae;
 } bd_pessoa;

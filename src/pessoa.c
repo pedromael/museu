@@ -30,13 +30,13 @@ void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas, int *total_pesso
     }
 }
 
-char criar_nome()
+char* criar_nome()
 {
     int tamanho = rand() % 11;
     if (tamanho < 4)
         tamanho = 4;
     
-    char nome[tamanho];
+    char* nome = malloc((tamanho+1) * sizeof(char));
     char alfabeto[] = "bcdfghjklmnpqrstvwxyz";//21
     char vogais[] = "aeiou";//5
 
@@ -82,7 +82,7 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
 
         dado.id = *total_pessoas;
         dado.genero = calcular_probablidade(45); 
-        dado.nome = criar_nome();
+        dado.nome = *criar_nome();
         dado.cor = (Uint8)255;
         dado.id_pai = 0;
         dado.id_mae = 0;
