@@ -5,13 +5,13 @@ CC = gcc
 CFLAGS = -Wall -g
 
 # Defina a biblioteca SDL
-LIBS = `sdl2-config --cflags --libs` -lm
+LIBS = `sdl2-config --cflags --libs` -lm -lsqlite3
 
 # Nome do executável
 TARGET = museu
 
 # Arquivos fontes
-SRCS = main.c src/pessoa.c src/control.c src/mapa.c src/accoes.c
+SRCS = main.c src/pessoa.c src/control.c src/mapa.c src/accoes.c src/bd.c
 
 # Arquivos objetos
 OBJS = $(SRCS:.c=.o)
