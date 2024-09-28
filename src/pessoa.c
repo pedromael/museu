@@ -82,10 +82,11 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
 
         dado.id = *total_pessoas;
         dado.genero = calcular_probablidade(45); 
-        dado.nome = *criar_nome();
+        strcpy(dado.nome, criar_nome());
         dado.cor = (Uint8)255;
         dado.id_pai = 0;
         dado.id_mae = 0;
+        strcpy(dado.nacionalidade, "angola");
 
         BD_nova_pessoa(dado);
 

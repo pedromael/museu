@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
         
 
     // Variável para controlar a frequência da mudança de direção
-    const int freqMudancaDirecao = 15; // Alterar a direção a cada X atualizações
+    const int freqMudancaDirecao = 1; // Alterar a direção a cada X atualizações
     int contadorMudancaDirecao = 0;
     printf("inicio:1\n");
     // Loop principal

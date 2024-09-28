@@ -2,6 +2,7 @@
 #define ACCOES_H
 
 #include <stdio.h>
+#include <string.h>
 #include "pessoa.h"
 #include "bd.h"
 

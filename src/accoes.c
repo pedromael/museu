@@ -26,11 +26,11 @@ void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas, int *total_pessoas
 
         dado.id = *total_pessoas;
         dado.genero = calcular_probablidade(45); 
-        dado.nome = criar_nome();
+        strcpy(dado.nome, criar_nome());
         dado.cor = (Uint8)255;
         dado.id_pai = 0;
         dado.id_mae = 0;
-        dado.nacionalidade = "angola";
+        strcpy(dado.nacionalidade, "angola");
 
         BD_nova_pessoa(dado);
 
