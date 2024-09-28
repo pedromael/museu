@@ -6,7 +6,8 @@ int calcular_probablidade(int percentagem){
     return 0;
 }
 void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas, int *total_pessoas, int *capacidade) {
-    if (pai->genero != pessoas[mae].genero) { // Verifica se os gêneros são opostos
+
+    if (BD_dados_pessoa(pai->id).genero != BD_dados_pessoa(mae).genero) { // Verifica se os gêneros são opostos
         if (*total_pessoas >= *capacidade) {
             *capacidade *= 2;
             pessoas = realloc(pessoas, *capacidade * sizeof(pessoa));
@@ -20,11 +21,18 @@ void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas, int *total_pessoas
         filho->y = (pai->y + pessoas[mae].y) / 2; // Posição média dos pais
         filho->tamanho = 4; // Tamanho padrão
         filho->cor = (Uint8)100; // Cor aleatória
-        filho->filiacao[0] = pai->id; // Armazena ID do pai
-        filho->filiacao[1] = pessoas[mae].id; // Armazena ID da mãe
-        filho->genero = rand() % 2; // Gênero aleatório para o filho
-        filho->idade = 0; // Idade inicial do filho
-        BD_nova_pessoa();
+
+        bd_pessoa dado;
+
+        dado.id = *total_pessoas;
+        dado.genero = calcular_probablidade(45); 
+        dado.nome = criar_nome();
+        dado.cor = (Uint8)255;
+        dado.id_pai = 0;
+        dado.id_mae = 0;
+
+        BD_nova_pessoa(dado);
+
         printf("criado: %d por %d e %d\n", *total_pessoas,pai->id,pessoas[mae].id);
     }
 }

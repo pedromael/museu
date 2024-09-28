@@ -5,5 +5,17 @@
 #include <sqlite3.h>
 #include "pessoa.h"
 
-int BD_nova_pessoa();
+typedef struct 
+{
+    int id;
+    int genero;
+    int nome;
+    char nacionalidade;
+    Uint8 cor;
+    int id_pai,id_mae;
+} bd_pessoa;
+
+int BD_nova_pessoa(bd_pessoa dados);
+bd_pessoa BD_dados_pessoa(int id);
+
 #endif

@@ -12,6 +12,7 @@ typedef struct {
     int tamanho;
     int velocidade;
     int dx, dy;
+    Uint8 cor;
     int id;
 } pessoa;
 

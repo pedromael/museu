@@ -30,6 +30,40 @@ void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas, int *total_pesso
     }
 }
 
+char criar_nome()
+{
+    int tamanho = rand() % 11;
+    if (tamanho < 4)
+        tamanho = 4;
+    
+    char nome[tamanho];
+    char alfabeto[] = "bcdfghjklmnpqrstvwxyz";//21
+    char vogais[] = "aeiou";//5
+
+    int primeira_letra = rand()%2;
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        if ((i + primeira_letra) % 2 == 0)
+        {
+            if (calcular_probablidade(85)) // 85% de chance de ser verdadeiro
+                nome[i] = alfabeto[rand()%21];
+            else
+                nome[i] = vogais[rand()%5];
+        }
+        else
+        {
+            if (calcular_probablidade(85))
+                nome[i] = vogais[rand()%5];
+            else
+                nome[i] = alfabeto[rand()%21];
+        }
+        
+    }
+    
+    return nome;    
+}
+
 // Função para desenhar uma pessoa
 void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p) {
     SDL_Color cor = { p->cor, 100, 100, 255 }; // Exemplo, ajuste conforme necessário
@@ -43,11 +77,22 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
     p->tamanho = 4;
     p->velocidade = rand() % 2;
     if (actualizacao_completa) {
+
+        bd_pessoa dado;
+
+        dado.id = *total_pessoas;
+        dado.genero = calcular_probablidade(45); 
+        dado.nome = criar_nome();
+        dado.cor = (Uint8)255;
+        dado.id_pai = 0;
+        dado.id_mae = 0;
+
+        BD_nova_pessoa(dado);
+
         p->x = (rand() % (WINDOW_WIDTH / p->tamanho)) * p->tamanho;
         p->y = (rand() % (WINDOW_HEIGHT / p->tamanho)) * p->tamanho;
         p->cor = (Uint8)255;  // Cor aleatória
         p->id = *total_pessoas;
-        p->genero = calcular_probablidade(45);
     }else verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade);
     
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1

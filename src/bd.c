@@ -9,7 +9,7 @@ sqlite3* conectar_BD()
         return 0;
     return conn;
 }
-int BD_nova_pessoa(char dados[])
+int BD_nova_pessoa(bd_pessoa dados)
 {
     if(!conectar_BD());
         printf("nao foi possivel conectar ao banco de dados");
@@ -23,4 +23,11 @@ int BD_nova_pessoa(char dados[])
 
     sql = "INSERT INTO usuarios(id,nome,genero,id_pai,id_mae,nacionalidade,cor) VALUES()";
     return 1;
+}
+
+bd_pessoa BD_dados_pessoas(int id)
+{
+    bd_pessoa dados;
+    
+    return dados;
 }
