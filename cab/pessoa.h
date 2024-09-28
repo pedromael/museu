@@ -10,13 +10,7 @@
 typedef struct {
     int x, y;
     int tamanho;
-    int idade;
-    int filiacao[2];
-    int genero;
-    int solteiro;
-    int nacionalidade;
     int velocidade;
-    Uint8 cor;
     int dx, dy;
     int id;
 } pessoa;

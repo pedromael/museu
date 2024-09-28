@@ -9,9 +9,18 @@ sqlite3* conectar_BD()
         return 0;
     return conn;
 }
-int BD_nova_pessoa()
+int BD_nova_pessoa(char dados[])
 {
-    if(conectar_BD());
-        printf("nova pessoa adicionada");
+    if(!conectar_BD());
+        printf("nao foi possivel conectar ao banco de dados");
+
+    char *erro;
+    const char *sql = "CREATE TABLE IF NOT EXISTS usuarios(id INT, nome TEXT,genero INT, id_pai INT, id_mae INT, nacionalidade TEXT, cor INT);";
+    int ver = sqlite3_exec(conectar_BD(), sql, 0, 0, &erro);
+    
+    if(ver != SQLITE_OK)
+        return 0;
+
+    sql = "INSERT INTO usuarios(id,nome,genero,id_pai,id_mae,nacionalidade,cor) VALUES()";
     return 1;
 }
