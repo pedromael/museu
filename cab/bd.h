@@ -11,7 +11,7 @@ typedef struct
     int genero;
     char nome[25];
     char nacionalidade[10];
-    Uint8 cor;
+    int cor;
     int id_pai,id_mae;
 } bd_pessoa;
 
