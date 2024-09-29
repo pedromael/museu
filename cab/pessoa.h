@@ -2,7 +2,6 @@
 #define PESSOA_H
 
 #include <stdio.h>
-#include <SDL2/SDL.h>
 #include "mapa.h"
 #include "bd.h"
 

@@ -4,10 +4,14 @@
 #include <time.h>
 
 #include "cab/control.h"
+#include "cab/desenho.h"
 #include "cab/mapa.h"
 #include "cab/pessoa.h"
 #include "cab/accoes.h"
 #include "cab/bd.h"
+
+float anguloX = 0.0f;
+float anguloY = 0.0f;
 
 int main(int argc, char* argv[]) {
     srand(time(NULL));
@@ -39,48 +43,33 @@ int main(int argc, char* argv[]) {
         }
         actualizar_rotina(&pessoas[total_pessoas], &total_pessoas, pessoas,&capacidade,1);
     }
-    int map_info[6][5] = {
-        {0,0,WINDOW_WIDTH/2-30,WINDOW_HEIGHT/2,1},
-        {WINDOW_WIDTH/2-30,0,30,WINDOW_HEIGHT/2,0},
-        {WINDOW_WIDTH-WINDOW_WIDTH/2,0,WINDOW_WIDTH/2,WINDOW_HEIGHT/2,1},
-        {0,WINDOW_HEIGHT/2+30,WINDOW_WIDTH/2-30,WINDOW_HEIGHT/2-30,1},
-        {WINDOW_WIDTH/2-30,WINDOW_HEIGHT/2+30,30,WINDOW_HEIGHT/2-30,0},
-        {WINDOW_WIDTH-WINDOW_WIDTH/2,WINDOW_HEIGHT/2+30,WINDOW_WIDTH/2,WINDOW_HEIGHT/2-30,1},
-    };
-
-    mapa map[6];
-        for (int i = 0; i < 6; i++) {
-            map[i].x = map_info[i][0];
-            map[i].y = map_info[i][1];
-            map[i].tx = map_info[i][2];
-            map[i].ty = map_info[i][3];
-            map[i].habitavel = map_info[i][4];
-        }
-        
 
     // Variável para controlar a frequência da mudança de direção
     const int freqMudancaDirecao = 1; // Alterar a direção a cada X atualizações
     int contadorMudancaDirecao = 0;
-    printf("inicio:1\n");
-    // Loop principal
-    int running = 1;
-    while (running) {
+    printf("inicio: 1\n");
+    
+    while (1) {
         // Processar eventos
-        running = control(NULL);
-
+        control(&anguloX,&anguloY);
+    
         // Limpe a tela
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
 
-        for (int i = 0; i < 6; i++)
-            desenhar_mapa(renderer,&map[i]);
+        if(!inicializar_mapa(renderer,&anguloX,&anguloY)){
+            printf("mapa nao inicializado");
+            return 1;
+        }
+        //for (int i = 0; i < 6; i++)
+        //    desenhar_mapa(renderer,&map[i]);
 
         contadorMudancaDirecao++;
         if (contadorMudancaDirecao >= freqMudancaDirecao) {
             for (int i = 0; i < populacao_inicial; i++){
                 //printf("passou");
                 actualizar_rotina(&pessoas[i], &total_pessoas,pessoas,&capacidade,0); // Atualiza direção aleatória
-                atualizar_pessoa(&pessoas[i],map,6);
+                atualizar_pessoa(&pessoas[i],NULL,6);
                 desenhar_pessoa(renderer, &pessoas[i]);
             }
             contadorMudancaDirecao = 0;
@@ -88,7 +77,7 @@ int main(int argc, char* argv[]) {
         }else{
             // Atualize e desenhe as pessoas
             for (int i = 0; i < total_pessoas; i++) {
-                atualizar_pessoa(&pessoas[i],map,6);
+                atualizar_pessoa(&pessoas[i],NULL,6);
                 desenhar_pessoa(renderer, &pessoas[i]);
             }
         }

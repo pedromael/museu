@@ -1,18 +1,25 @@
 #include "../cab/control.h"  // Inclua o cabeçalho para a declaração da função
 
 // Função para processar eventos e atualizar a posição do quadrado
-int control(SDL_Rect *square) {
+void control(float *anguloX, float *anguloY) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
-            return 0;  // Retorna 0 se o evento de fechamento da janela for detectado
-        }
-        if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_w) square->y -= 10;
-            if (event.key.keysym.sym == SDLK_s) square->y += 10;
-            if (event.key.keysym.sym == SDLK_a) square->x -= 10;
-            if (event.key.keysym.sym == SDLK_d) square->x += 10;
-        }
+            } else if (event.type == SDL_KEYDOWN) {
+                switch (event.key.keysym.sym) {
+                    case SDLK_UP:
+                        *anguloX -= ROTATION_SPEED; // Gira ao redor do eixo X
+                        break;
+                    case SDLK_DOWN:
+                        *anguloX += ROTATION_SPEED;
+                        break;
+                    case SDLK_LEFT:
+                        *anguloY -= ROTATION_SPEED; // Gira ao redor do eixo Y
+                        break;
+                    case SDLK_RIGHT:
+                        *anguloY += ROTATION_SPEED;
+                        break;
+                }
+            }
     }
-    return 1;  // Retorna 1 para continuar o loop
 }

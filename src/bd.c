@@ -1,6 +1,6 @@
 #include "../cab/bd.h"
 
- conectar_BD(sqlite3 **conn)
+int conectar_BD(sqlite3 **conn)
 {
     const char *indereco_de_arquivo = "bancoDeDados.db";
     int ver = sqlite3_open(indereco_de_arquivo,conn);

@@ -5,6 +5,9 @@
 
 // Verifica se uma área é habitável
 int verificar_habitabilidade(int x, int y, mapa *mapas, int num_mapas) {
+    //parada devido a mudanca no mapa
+    return 1;
+
     for (int i = 0; i < num_mapas; i++) {
         mapa *m = &mapas[i];
         if (!m->habitavel) // Verifica se a área é não habitável

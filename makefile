@@ -11,7 +11,7 @@ LIBS = `sdl2-config --cflags --libs` -lm -lsqlite3
 TARGET = museu
 
 # Arquivos fontes
-SRCS = main.c src/pessoa.c src/control.c src/mapa.c src/accoes.c src/bd.c
+SRCS = main.c src/pessoa.c src/control.c src/mapa.c src/accoes.c src/bd.c src/desenho.c
 
 # Arquivos objetos
 OBJS = $(SRCS:.c=.o)

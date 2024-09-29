@@ -2,8 +2,9 @@
 #define CONTROL_H
 
 #include <SDL2/SDL.h>
+#include "desenho.h"
 
 // Função para processar eventos e atualizar a posição do quadrado
-int control(SDL_Rect *square);
+void control(float *anguloX, float *anguloY);
 
 #endif // CONTROL_H
