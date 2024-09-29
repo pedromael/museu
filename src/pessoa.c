@@ -112,10 +112,10 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
             {p->x + 4, p->y, 0},         // Vértice superior direito frontal
             {p->x, p->y , 0},                    // Vértice superior esquerdo frontal
             
-            {p->x, p->y + 4, 4},       // Vértice inferior esquerdo traseiro
-            {p->x + 4, p->y + 4, 4},     // Vértice inferior direito traseiro
-            {p->x + 4, p->y, 4},        // Vértice superior direito traseiro
-            {p->x, p->y, 4}                    // Vértice superior esquerdo traseiro
+            {p->x, p->y + 4, 10},       // Vértice inferior esquerdo traseiro
+            {p->x + 4, p->y + 4, 10},     // Vértice inferior direito traseiro
+            {p->x + 4, p->y, 10},        // Vértice superior direito traseiro
+            {p->x, p->y, 10}                    // Vértice superior esquerdo traseiro
         };
 
         for (int i = 0; i < 8; i++)
@@ -146,6 +146,22 @@ void atualizar_pessoa(pessoa *p, mapa mapas[], int num_mapas) {
     if (verificar_habitabilidade(nova_x, nova_y, mapas, num_mapas)) {
         p->x = nova_x;
         p->y = nova_y;
+
+        Point3D vertices[8] = {
+            {p->x, p->y + 4, 0},        // Vértice inferior esquerdo frontal
+            {p->x + 4, p->y + 4, 0},      // Vértice inferior direito frontal
+            {p->x + 4, p->y, 0},         // Vértice superior direito frontal
+            {p->x, p->y , 0},                    // Vértice superior esquerdo frontal
+            
+            {p->x, p->y + 4, 10},       // Vértice inferior esquerdo traseiro
+            {p->x + 4, p->y + 4, 10},     // Vértice inferior direito traseiro
+            {p->x + 4, p->y, 10},        // Vértice superior direito traseiro
+            {p->x, p->y, 10}                    // Vértice superior esquerdo traseiro
+        };
+
+        for (int i = 0; i < 8; i++)
+            p->vertices[i] = vertices[i];
+            
     } else {
         p->dx = (calcular_probablidade(50)) ? -1 : 1;
         p->dy = (calcular_probablidade(50)) ? -1 : 1;
