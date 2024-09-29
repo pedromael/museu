@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
                 //printf("passou");
                 actualizar_rotina(&pessoas[i], &total_pessoas,pessoas,&capacidade,0); // Atualiza direção aleatória
                 atualizar_pessoa(&pessoas[i],NULL,6);
-                desenhar_pessoa(renderer, &pessoas[i]);
+                desenhar_pessoa(renderer, &pessoas[i],&anguloX,&anguloY);
             }
             contadorMudancaDirecao = 0;
             //printf("%d - esta no %d-%d indo a %d-%d \n",pes[i].id,pes[i].x,pes[i].y,pes[i].dx,pes[i].dy);
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
             // Atualize e desenhe as pessoas
             for (int i = 0; i < total_pessoas; i++) {
                 atualizar_pessoa(&pessoas[i],NULL,6);
-                desenhar_pessoa(renderer, &pessoas[i]);
+                desenhar_pessoa(renderer, &pessoas[i],&anguloX,&anguloY);
             }
         }
 

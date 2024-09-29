@@ -68,11 +68,22 @@ char* criar_nome()
 }
 
 // Função para desenhar uma pessoa
-void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p) {
+void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p, float *anguloX, float *anguloY) {
+    int edges[12][2] = {
+        {0, 1}, {1, 2}, {2, 3}, {3, 0},
+        {4, 5}, {5, 6}, {6, 7}, {7, 4},
+        {0, 4}, {1, 5}, {2, 6}, {3, 7}
+    };
+
     SDL_Color cor = { p->cor, 100, 100, 255 }; // Exemplo, ajuste conforme necessário
     SDL_SetRenderDrawColor(renderer, cor.r, cor.g, cor.b, cor.a);
-    SDL_Rect rect = { p->x, p->y, p->tamanho, p->tamanho };
-    SDL_RenderFillRect(renderer, &rect);
+
+    for (int i = 0; i < 12; i++)
+    {
+        Point2D p1 = convert_3D_2D(p->vertices[edges[i][0]],anguloX,anguloY);
+        Point2D p2 = convert_3D_2D(p->vertices[edges[i][1]],anguloX,anguloY);
+        SDL_RenderDrawLine(renderer, p1.x, p1.y, p2.x, p2.y );
+    }
 }
 
 // Atualiza a rotina de uma pessoa
@@ -95,6 +106,21 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
 
         p->x = (rand() % (WINDOW_WIDTH / p->tamanho)) * p->tamanho;
         p->y = (rand() % (WINDOW_HEIGHT / p->tamanho)) * p->tamanho;
+        Point3D vertices[8] = {
+            {p->x, p->y + 4, 0},        // Vértice inferior esquerdo frontal
+            {p->x + 4, p->y + 4, 0},      // Vértice inferior direito frontal
+            {p->x + 4, p->y, 0},         // Vértice superior direito frontal
+            {p->x, p->y , 0},                    // Vértice superior esquerdo frontal
+            
+            {p->x, p->y + 4, 4},       // Vértice inferior esquerdo traseiro
+            {p->x + 4, p->y + 4, 4},     // Vértice inferior direito traseiro
+            {p->x + 4, p->y, 4},        // Vértice superior direito traseiro
+            {p->x, p->y, 4}                    // Vértice superior esquerdo traseiro
+        };
+
+        for (int i = 0; i < 8; i++)
+            p->vertices[i] = vertices[i];
+
         p->cor = (Uint8)255;  // Cor aleatória
         p->id = *total_pessoas;
     }else verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade);

@@ -24,15 +24,15 @@ int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float 
 // Função para inicializar o mapa
 int inicializar_mapa(SDL_Renderer *renderer, float *anguloX, float *anguloY) {
     Point3D vertices[8] = {
-    {0, WINDOW_HEIGHT, 0},        // Vértice inferior esquerdo frontal
-    {WINDOW_WIDTH, WINDOW_HEIGHT, 0},      // Vértice inferior direito frontal
-    {WINDOW_WIDTH, 0, 0},         // Vértice superior direito frontal
-    {0, 0, 0},                    // Vértice superior esquerdo frontal
-    {0, WINDOW_HEIGHT, 10},       // Vértice inferior esquerdo traseiro
-    {WINDOW_WIDTH, WINDOW_HEIGHT, 10},     // Vértice inferior direito traseiro
-    {WINDOW_WIDTH, 0, 10},        // Vértice superior direito traseiro
-    {0, 0, 10}                    // Vértice superior esquerdo traseiro
-};
+        {0, WINDOW_HEIGHT, 6},        // Vértice inferior esquerdo frontal
+        {WINDOW_WIDTH, WINDOW_HEIGHT, 6},      // Vértice inferior direito frontal
+        {WINDOW_WIDTH, 0, 6},         // Vértice superior direito frontal
+        {0, 0, 6},                    // Vértice superior esquerdo frontal
+        {0, WINDOW_HEIGHT, 10},       // Vértice inferior esquerdo traseiro
+        {WINDOW_WIDTH, WINDOW_HEIGHT, 10},     // Vértice inferior direito traseiro
+        {WINDOW_WIDTH, 0, 10},        // Vértice superior direito traseiro
+        {0, 0, 10}                    // Vértice superior esquerdo traseiro
+    };
 
     mapa meu_mapa;
     for (int i = 0; i < 8; i++)

@@ -8,6 +8,7 @@
 // Definição da estrutura pessoa
 typedef struct {
     int x, y, z;
+    Point3D vertices[8];
     int tamanho;
     int velocidade;
     int dx, dy, dz;
@@ -15,7 +16,7 @@ typedef struct {
     int id;
 } pessoa;
 
-void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p);
+void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p, float *anguloX, float *anguloY);
 void actualizar_rotina(pessoa *p, int *total_pessoas,pessoa *pessoas,int *capacidade, int actualizacao_completa);
 void atualizar_pessoa(pessoa *p,mapa map[], int num_mapas);
 
