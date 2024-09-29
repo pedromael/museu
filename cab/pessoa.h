@@ -8,10 +8,10 @@
 
 // Definição da estrutura pessoa
 typedef struct {
-    int x, y;
+    int x, y, z;
     int tamanho;
     int velocidade;
-    int dx, dy;
+    int dx, dy, dz;
     Uint8 cor;
     int id;
 } pessoa;

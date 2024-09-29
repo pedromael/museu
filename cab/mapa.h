@@ -6,7 +6,7 @@
 #define WINDOW_HEIGHT 500//900
 typedef struct
 {
-    int x,y;
+    int x,y,z;
     int tx,ty; //tamanho
     int habitavel;
     int cor;
