@@ -7,7 +7,7 @@ Point2D convert_3D_2D(Point3D p, float *anguloX, float *anguloY) {
     float centerZ = 10.0f / 2.0f;  // Supondo profundidade de 10 (ou ajuste conforme necessário)
 
     // Transladar o ponto para o centro do objeto
-    float x = p.x - centerX;
+    float x = p.x - centerX; 
     float y = p.y - centerY;
     float z = p.z - centerZ;
 

@@ -54,7 +54,7 @@ int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float 
     }
 
     // Desenhar e preencher a face frontal
-    desenhar_frente(renderer, qu, anguloX, anguloY);
+    //desenhar_frente(renderer, qu, anguloX, anguloY);
 
     return 1;
 }
@@ -62,15 +62,16 @@ int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float 
 // Função para inicializar o mapa com vértices do cubo
 int inicializar_mapa(SDL_Renderer *renderer, float *anguloX, float *anguloY) {
     // Definir os vértices do cubo (um retângulo 3D)
+    
     Point3D vertices[8] = {
-        {0, WINDOW_HEIGHT, 10},        // Vértice inferior esquerdo frontal
-        {WINDOW_WIDTH, WINDOW_HEIGHT, 10},      // Vértice inferior direito frontal
-        {WINDOW_WIDTH, 0, 10},         // Vértice superior direito frontal
-        {0, 0, 10},                    // Vértice superior esquerdo frontal
-        {0, WINDOW_HEIGHT, 20},       // Vértice inferior esquerdo traseiro
-        {WINDOW_WIDTH, WINDOW_HEIGHT, 20},     // Vértice inferior direito traseiro
-        {WINDOW_WIDTH, 0, 20},        // Vértice superior direito traseiro
-        {0, 0, 20}                    // Vértice superior esquerdo traseiro
+        {0 - EX_M, WINDOW_HEIGHT + EX_M, 10},        // Vértice inferior esquerdo frontal
+        {WINDOW_WIDTH + EX_M, WINDOW_HEIGHT + EX_M, 10},      // Vértice inferior direito frontal
+        {WINDOW_WIDTH + EX_M, 0 - EX_M, 10},         // Vértice superior direito frontal
+        {0 - EX_M, 0 - EX_M, 10},                    // Vértice superior esquerdo frontal
+        {0 - EX_M, WINDOW_HEIGHT + EX_M, 20},       // Vértice inferior esquerdo traseiro
+        {WINDOW_WIDTH + EX_M, WINDOW_HEIGHT + EX_M, 20},     // Vértice inferior direito traseiro
+        {WINDOW_WIDTH + EX_M, 0 - EX_M, 20},        // Vértice superior direito traseiro
+        {0 - EX_M, 0 - EX_M, 20}                    // Vértice superior esquerdo traseiro
     };
 
     // Criar a estrutura do mapa

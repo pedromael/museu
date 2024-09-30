@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     // Inicialize as pessoas com direções e velocidades aleatórias
     int total_pessoas = 0;
     int capacidade = 10; // Capacidade inicial
-    int populacao_inicial = 20;
+    int populacao_inicial = 2750;
 
     // Aloca memória dinamicamente para o array de pessoas
     pessoa *pessoas = malloc(capacidade * sizeof(pessoa));
@@ -45,14 +45,14 @@ int main(int argc, char* argv[]) {
     }
 
     // Variável para controlar a frequência da mudança de direção
-    const int freqMudancaDirecao = 15; // Alterar a direção a cada X atualizações
+    const int freqMudancaDirecao = 75; // Alterar a direção a cada X atualizações
     int contadorMudancaDirecao = 0;
     printf("inicio: 1\n");
     
     while (1) {
         // Processar eventos
         //printf("entrou em loop principal\n");
-        control(&anguloX,&anguloY);
+        if(!control(&anguloX,&anguloY)) break;
     
         // Limpe a tela
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

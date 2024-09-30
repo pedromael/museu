@@ -104,8 +104,8 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
 
         BD_nova_pessoa(dado);
 
-        p->x = (rand() % (WINDOW_WIDTH / p->tamanho)) * p->tamanho;
-        p->y = (rand() % (WINDOW_HEIGHT / p->tamanho)) * p->tamanho;
+        p->x = (rand() % ((WINDOW_WIDTH + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
+        p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
         Point3D vertices[8] = {
             {p->x, p->y + 4, 0},        // Vértice inferior esquerdo frontal
             {p->x + 4, p->y + 4, 0},      // Vértice inferior direito frontal
@@ -168,14 +168,14 @@ void atualizar_pessoa(pessoa *p, mapa mapas[], int num_mapas) {
     }
 
     // Verificar limites e ajustar posição e direção
-    if (p->x < 0) { p->x = 0; p->dx = -p->dx; }
-    if (p->x > WINDOW_WIDTH - p->tamanho) {
-        p->x = WINDOW_WIDTH - p->tamanho;
+    if (p->x < 0 - EX_M) { p->x = 0 - EX_M; p->dx = -p->dx; }
+    if (p->x > WINDOW_WIDTH + EX_M - p->tamanho) {
+        p->x = WINDOW_WIDTH + EX_M- p->tamanho;
         p->dx = -p->dx;
     }
-    if (p->y < 0) { p->y = 0; p->dy = -p->dy; }
-    if (p->y > WINDOW_HEIGHT - p->tamanho) {
-        p->y = WINDOW_HEIGHT - p->tamanho;
+    if (p->y < 0 - EX_M) { p->y = 0 - EX_M; p->dy = -p->dy; }
+    if (p->y > WINDOW_HEIGHT + EX_M - p->tamanho) {
+        p->y = WINDOW_HEIGHT + EX_M - p->tamanho;
         p->dy = -p->dy;
     }
 }

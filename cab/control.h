@@ -5,6 +5,6 @@
 #include "desenho.h"
 
 // Função para processar eventos e atualizar a posição do quadrado
-void control(float *anguloX, float *anguloY);
+int control(float *anguloX, float *anguloY);
 
 #endif // CONTROL_H
