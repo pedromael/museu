@@ -37,33 +37,39 @@ char* criar_nome()
 {
     int tamanho = rand() % 11;
     if (tamanho < 4)
-        tamanho = 4;
+        tamanho = 3;
     
     char* nome = malloc((tamanho+1) * sizeof(char));
-    char alfabeto[] = "bcdfghjklmnpqrstvwxyz";//21
-    char vogais[] = "aeiou";//5
+    char alfabeto[] = "bcdfghjklmnpqrstvwxz";//20
+    char alfabeto_refinado[] = "rhs";//3
+    char vogais[] = "aeiouy";//6
 
     int primeira_letra = rand()%2;
 
-    for (int i = 0; i < tamanho; i++)
+    int i;
+    for (i = 0; i < tamanho; i++)
     {
         if ((i + primeira_letra) % 2 == 0)
         {
-            if (calcular_probablidade(85)) // 85% de chance de ser verdadeiro
-                nome[i] = alfabeto[rand()%21];
-            else
-                nome[i] = vogais[rand()%5];
+            if (calcular_probablidade(95)) {// 95% de chance de ser verdadeiro
+                nome[i] = alfabeto_refinado[rand()%3];
+                if(++i < tamanho)
+                    nome[i] = vogais[rand()%6];
+            }else
+                nome[i] = vogais[rand()%6];
         }
         else
         {
-            if (calcular_probablidade(85))
-                nome[i] = vogais[rand()%5];
-            else
-                nome[i] = alfabeto[rand()%21];
+            if (calcular_probablidade(95)){
+                nome[i] = vogais[rand()%6];
+                if(++i < tamanho)
+                    nome[i] = alfabeto[rand()%20];
+            }else
+                nome[i] = alfabeto[rand()%20];
         }
         
     }
-    
+    nome[i] = '\0';
     return nome;    
 }
 
@@ -102,7 +108,8 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
         dado.id_mae = 0;
         strcpy(dado.nacionalidade, "angola");
 
-        BD_nova_pessoa(dado);
+        printf("id- %d nome: %s \n", *total_pessoas,dado.nome);
+        //BD_nova_pessoa(dado);
 
         p->x = (rand() % ((WINDOW_WIDTH + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
         p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
