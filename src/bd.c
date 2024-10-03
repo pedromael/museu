@@ -48,6 +48,38 @@ int BD_nova_pessoa(bd_pessoa dados)
 bd_pessoa BD_dados_pessoa(int id)
 {
     bd_pessoa dados;
+    sqlite3 *conn;
+    sqlite3_stmt *stmt;
+    const char *sql;
+    
+    if(!conectar_BD(&conn)) printf("falha ao conectar banco de dados");
+
+    sql = "SELECT id, nome, idade FROM pessoas;";
+
+    int rc;
+
+    rc= sqlite3_prepare_v2(conn, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) printf("falha ao realizar consulta");
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        if(id != sqlite3_column_int(stmt, 0)) continue;
+
+        dados.id = sqlite3_column_int(stmt, 0);
+        strcpy(dados.nome, (const char*)sqlite3_column_text(stmt, 1));
+        dados.genero = sqlite3_column_int(stmt, 2);          
+        dados.id_pai = sqlite3_column_int(stmt, 3);
+        dados.id_mae = sqlite3_column_int(stmt, 4);
+        strcpy(dados.nacionalidade, (const char*)sqlite3_column_text(stmt, 5));
+        dados.cor = sqlite3_column_int(stmt, 6);
+        break;
+    }
+
+    if (rc != SQLITE_DONE) {
+        printf("Erro ao realizar o SELECT: %s\n", sqlite3_errmsg(conn));
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(conn);
 
     return dados;
 }
