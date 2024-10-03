@@ -17,7 +17,7 @@ Point2D convert_3D_2D(Point3D p, float *anguloX, float *anguloY) {
 
     // Rotação ao redor do eixo Y
     float x2 = x * cos(*anguloY) - z2 * sin(*anguloY);
-    float z3 = x * sin(*anguloY) + z2 * cos(*anguloY);
+    //float z3 = x * sin(*anguloY) + z2 * cos(*anguloY);
 
     Point2D p2d;
 

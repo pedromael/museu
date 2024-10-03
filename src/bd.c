@@ -17,7 +17,7 @@ int BD_nova_pessoa(bd_pessoa dados)
 
     char *erro;
     const char *sql = "CREATE TABLE IF NOT EXISTS usuarios(id INT, nome TEXT,genero INT, id_pai INT, id_mae INT, nacionalidade TEXT, cor INT);";
-    int ver = sqlite3_exec(conn, sql, 0, 0, erro);
+    int ver = sqlite3_exec(conn, sql, 0, 0, &erro);
     
     if(ver != SQLITE_OK){
         printf("falha na execucao do codigo sql %s\n", erro);
