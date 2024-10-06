@@ -18,7 +18,7 @@ int verificar_habitabilidade(int x, int y, mapa *mapas, int num_mapas) {
 }
 
 // Verifica se há pessoas próximas
-void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas) {
+void verificar_pessoa_a_volta(pessoa *pessoa1) {
     int raio = 10;
     //printf("verificacao de pessoa a volta:");
     for (int i = 0; i < total_pessoas; i++) {
@@ -26,7 +26,7 @@ void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas) {
             int diffX = abs(pessoa1->x - pessoas[i].x);
             int diffY = abs(pessoa1->y - pessoas[i].y);
             if (diffX <= raio && diffY <= raio) {
-                interagir(pessoa1, i, pessoas);
+                interagir(pessoa1, i);
                 break;
             }
         }
@@ -93,7 +93,7 @@ void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p) {
 }
 
 // Atualiza a rotina de uma pessoa
-void actualizar_rotina(pessoa *p, pessoa *pessoas, int actualizacao_completa) {
+void actualizar_rotina(pessoa *p, int actualizacao_completa) {
     p->tamanho = 4;
     p->velocidade = rand() % 2;
     if (actualizacao_completa) {
@@ -132,7 +132,7 @@ void actualizar_rotina(pessoa *p, pessoa *pessoas, int actualizacao_completa) {
 
         p->cor = (Uint8)255;  // Cor aleatória
         p->id = total_pessoas;
-    }else verificar_pessoa_a_volta(p, pessoas);
+    }else verificar_pessoa_a_volta(p);
     
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
     p->dy = (calcular_probablidade(50)) ? -1 : 1;

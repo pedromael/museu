@@ -21,11 +21,12 @@ extern float anguloX;
 extern float anguloY;
 extern int total_pessoas;
 extern int capacidade;
+extern pessoa *pessoas;
 
 char* criar_nome();
 void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p);
-void actualizar_rotina(pessoa *p,pessoa *pessoas, int actualizacao_completa);
+void actualizar_rotina(pessoa *p, int actualizacao_completa);
 void atualizar_pessoa(pessoa *p,mapa map[], int num_mapas);
-void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas);
+void verificar_pessoa_a_volta(pessoa *pessoa1);
 
 #endif // PESSOA_H

@@ -14,6 +14,7 @@ int total_pessoas = 0;
 int capacidade = 10; 
 float anguloX = -0.3f;
 float anguloY = 0.3f;
+pessoa *pessoas;
 
 int main(int argc, char* argv[]) {
     srand(time(NULL));
@@ -28,9 +29,8 @@ int main(int argc, char* argv[]) {
 
     // Inicialize as pessoas com direções e velocidades aleatórias
     int populacao_inicial = 10;
+    pessoas = malloc(capacidade * sizeof(pessoa));
 
-    // Aloca memória dinamicamente para o array de pessoas
-    pessoa *pessoas = malloc(capacidade * sizeof(pessoa));
     if (pessoas == NULL) return 1;
 
     
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
             if (pessoas == NULL)
                 return 1; 
         }
-        actualizar_rotina(&pessoas[total_pessoas], pessoas,1);
+        actualizar_rotina(&pessoas[total_pessoas],1);
     }
 
     // Variável para controlar a frequência da mudança de direção
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
         if (contadorMudancaDirecao >= freqMudancaDirecao) {
             for (int i = 0; i < total_pessoas; i++){
                 //printf("passou");
-                actualizar_rotina(&pessoas[i], pessoas,0); // Atualiza direção aleatória
+                actualizar_rotina(&pessoas[i],0); // Atualiza direção aleatória
                 atualizar_pessoa(&pessoas[i],NULL,6);
                 desenhar_pessoa(renderer, &pessoas[i]);
             }

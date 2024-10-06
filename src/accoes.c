@@ -5,7 +5,7 @@ int calcular_probablidade(int percentagem){
     if(percentagem <= perc) return 1;
     return 0;
 }
-void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas) {
+void criar_nova_pessoa(pessoa *pai, int mae) {
 
     if (BD_dados_pessoa(pai->id)[0].genero != BD_dados_pessoa(mae)[0].genero) { // Verifica se os gêneros são opostos
         if (total_pessoas >= capacidade) {
@@ -38,9 +38,9 @@ void criar_nova_pessoa(pessoa *pai, int mae, pessoa *pessoas) {
     }
 }
 
-void interagir(pessoa *pessoa1, int p2, pessoa *pessoas) {
+void interagir(pessoa *pessoa1, int p2) {
     if (calcular_probablidade(5)) {
         //printf("Usuário: %d em x-%d e y-%d acionou %d em x-%d e y-%d\n", pessoa1->id, pessoa1->x, pessoa1->y, pessoas[p2].id, pessoas[p2].x, pessoas[p2].y);
-        criar_nova_pessoa(pessoa1, p2, pessoas);
+        criar_nova_pessoa(pessoa1, p2);
     }
 }
