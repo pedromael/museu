@@ -21,11 +21,11 @@ void preencher_frente(SDL_Renderer *renderer, Point2D p1, Point2D p2, Point2D p3
 }
 
 // Função para desenhar a face frontal
-int desenhar_frente(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float *anguloY) {
+int desenhar_frente(SDL_Renderer *renderer, const mapa *qu) {
     // Definir os vértices da face frontal (vértices 0 a 3)
     Point2D pontos2D[4];
     for (int i = 0; i < 4; i++) {
-        pontos2D[i] = convert_3D_2D(qu->vertices[i], anguloX, anguloY);
+        pontos2D[i] = convert_3D_2D(qu->vertices[i]);
     }
 
     // Preencher a face frontal
@@ -35,7 +35,7 @@ int desenhar_frente(SDL_Renderer *renderer, const mapa *qu, float *anguloX, floa
 }
 
 // Função principal para desenhar o mapa
-int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float *anguloY) {
+int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu) {
     // Definir as arestas do cubo
     int edges[12][2] = {
         {0, 1}, {1, 2}, {2, 3}, {3, 0},
@@ -48,8 +48,8 @@ int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float 
 
     // Desenhar as linhas do cubo
     for (int i = 0; i < 12; i++) {
-        Point2D p1 = convert_3D_2D(qu->vertices[edges[i][0]], anguloX, anguloY);
-        Point2D p2 = convert_3D_2D(qu->vertices[edges[i][1]], anguloX, anguloY);
+        Point2D p1 = convert_3D_2D(qu->vertices[edges[i][0]]);
+        Point2D p2 = convert_3D_2D(qu->vertices[edges[i][1]]);
         SDL_RenderDrawLine(renderer, p1.x, p1.y, p2.x, p2.y);
     }
 
@@ -60,7 +60,7 @@ int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float 
 }
 
 // Função para inicializar o mapa com vértices do cubo
-int inicializar_mapa(SDL_Renderer *renderer, float *anguloX, float *anguloY) {
+int inicializar_mapa(SDL_Renderer *renderer) {
     // Definir os vértices do cubo (um retângulo 3D)
     
     Point3D vertices[8] = {
@@ -81,7 +81,7 @@ int inicializar_mapa(SDL_Renderer *renderer, float *anguloX, float *anguloY) {
     }
 
     // Desenhar o mapa
-    if (desenhar_mapa(renderer, &meu_mapa, anguloX, anguloY)) {
+    if (desenhar_mapa(renderer, &meu_mapa)) {
         return 1;
     }
 

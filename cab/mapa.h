@@ -14,7 +14,9 @@ typedef struct
     int cor;
 } mapa;
 
-int inicializar_mapa(SDL_Renderer *renderer, float *anguloX, float *anguloY);
-int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu, float *anguloX, float *anguloY);
+extern float anguloX;
+extern float anguloY;
+int inicializar_mapa(SDL_Renderer *renderer);
+int desenhar_mapa(SDL_Renderer *renderer, const mapa *qu);
 
 #endif

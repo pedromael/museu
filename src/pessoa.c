@@ -18,15 +18,15 @@ int verificar_habitabilidade(int x, int y, mapa *mapas, int num_mapas) {
 }
 
 // Verifica se há pessoas próximas
-void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas, int *total_pessoas, int *capacidade) {
+void verificar_pessoa_a_volta(pessoa *pessoa1, pessoa *pessoas) {
     int raio = 10;
     //printf("verificacao de pessoa a volta:");
-    for (int i = 0; i < *total_pessoas; i++) {
+    for (int i = 0; i < total_pessoas; i++) {
         if (i != pessoa1->id) {
             int diffX = abs(pessoa1->x - pessoas[i].x);
             int diffY = abs(pessoa1->y - pessoas[i].y);
             if (diffX <= raio && diffY <= raio) {
-                interagir(pessoa1, i, pessoas, total_pessoas, capacidade);
+                interagir(pessoa1, i, pessoas);
                 break;
             }
         }
@@ -74,7 +74,7 @@ char* criar_nome()
 }
 
 // Função para desenhar uma pessoa
-void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p, float *anguloX, float *anguloY) {
+void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p) {
     int edges[12][2] = {
         {0, 1}, {1, 2}, {2, 3}, {3, 0},
         {4, 5}, {5, 6}, {6, 7}, {7, 4},
@@ -86,33 +86,35 @@ void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p, float *anguloX, fl
 
     for (int i = 0; i < 12; i++)
     {
-        Point2D p1 = convert_3D_2D(p->vertices[edges[i][0]],anguloX,anguloY);
-        Point2D p2 = convert_3D_2D(p->vertices[edges[i][1]],anguloX,anguloY);
+        Point2D p1 = convert_3D_2D(p->vertices[edges[i][0]]);
+        Point2D p2 = convert_3D_2D(p->vertices[edges[i][1]]);
         SDL_RenderDrawLine(renderer, p1.x, p1.y, p2.x, p2.y );
     }
 }
 
 // Atualiza a rotina de uma pessoa
-void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capacidade, int actualizacao_completa) {
+void actualizar_rotina(pessoa *p, pessoa *pessoas, int actualizacao_completa) {
     p->tamanho = 4;
     p->velocidade = rand() % 2;
     if (actualizacao_completa) {
+        p->x = (rand() % ((WINDOW_WIDTH + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
+        p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
 
         bd_pessoa dado;
 
-        dado.id = *total_pessoas;
+        dado.id = total_pessoas;
         dado.genero = calcular_probablidade(45); 
         strcpy(dado.nome, criar_nome());
         dado.cor = (Uint8)255;
         dado.id_pai = 0;
         dado.id_mae = 0;
         strcpy(dado.nacionalidade, "angola");
+        dado.x = p->x;
+        dado.y = p->y;
 
-        printf("id- %d nome: %s \n", *total_pessoas,dado.nome);
-        //BD_nova_pessoa(dado);
+        printf("id- %d nome: %s \n", total_pessoas,dado.nome);
+        BD_nova_pessoa(dado);
 
-        p->x = (rand() % ((WINDOW_WIDTH + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
-        p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
         Point3D vertices[8] = {
             {p->x, p->y + 4, 0},        // Vértice inferior esquerdo frontal
             {p->x + 4, p->y + 4, 0},      // Vértice inferior direito frontal
@@ -129,8 +131,8 @@ void actualizar_rotina(pessoa *p, int *total_pessoas, pessoa *pessoas, int *capa
             p->vertices[i] = vertices[i];
 
         p->cor = (Uint8)255;  // Cor aleatória
-        p->id = *total_pessoas;
-    }else verificar_pessoa_a_volta(p, pessoas, total_pessoas, capacidade);
+        p->id = total_pessoas;
+    }else verificar_pessoa_a_volta(p, pessoas);
     
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
     p->dy = (calcular_probablidade(50)) ? -1 : 1;

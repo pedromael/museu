@@ -10,8 +10,10 @@
 #include "cab/accoes.h"
 #include "cab/bd.h"
 
-float anguloX = 0.0f;
-float anguloY = 0.0f;
+int total_pessoas = 0;
+int capacidade = 10; 
+float anguloX = -0.3f;
+float anguloY = 0.3f;
 
 int main(int argc, char* argv[]) {
     srand(time(NULL));
@@ -25,13 +27,13 @@ int main(int argc, char* argv[]) {
     SDL_RenderClear(renderer);
 
     // Inicialize as pessoas com direções e velocidades aleatórias
-    int total_pessoas = 0;
-    int capacidade = 10; // Capacidade inicial
-    int populacao_inicial = 8750;
+    int populacao_inicial = 10;
 
     // Aloca memória dinamicamente para o array de pessoas
     pessoa *pessoas = malloc(capacidade * sizeof(pessoa));
     if (pessoas == NULL) return 1;
+
+    
 
     for (int i = 0; i < populacao_inicial; i++) {
         total_pessoas++;
@@ -41,7 +43,7 @@ int main(int argc, char* argv[]) {
             if (pessoas == NULL)
                 return 1; 
         }
-        actualizar_rotina(&pessoas[total_pessoas], &total_pessoas, pessoas,&capacidade,1);
+        actualizar_rotina(&pessoas[total_pessoas], pessoas,1);
     }
 
     // Variável para controlar a frequência da mudança de direção
@@ -52,13 +54,13 @@ int main(int argc, char* argv[]) {
     while (1) {
         // Processar eventos
         //printf("entrou em loop principal\n");
-        if(!control(&anguloX,&anguloY)) break;
+        if(!control()) break;
     
         // Limpe a tela
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
 
-        if(!inicializar_mapa(renderer,&anguloX,&anguloY)){
+        if(!inicializar_mapa(renderer)){
             printf("mapa nao inicializado");
             return 1;
         }
@@ -67,11 +69,11 @@ int main(int argc, char* argv[]) {
 
         contadorMudancaDirecao++;
         if (contadorMudancaDirecao >= freqMudancaDirecao) {
-            for (int i = 0; i < populacao_inicial; i++){
+            for (int i = 0; i < total_pessoas; i++){
                 //printf("passou");
-                actualizar_rotina(&pessoas[i], &total_pessoas,pessoas,&capacidade,0); // Atualiza direção aleatória
+                actualizar_rotina(&pessoas[i], pessoas,0); // Atualiza direção aleatória
                 atualizar_pessoa(&pessoas[i],NULL,6);
-                desenhar_pessoa(renderer, &pessoas[i],&anguloX,&anguloY);
+                desenhar_pessoa(renderer, &pessoas[i]);
             }
             contadorMudancaDirecao = 0;
             //printf("%d - esta no %d-%d indo a %d-%d \n",pes[i].id,pes[i].x,pes[i].y,pes[i].dx,pes[i].dy);
@@ -79,7 +81,7 @@ int main(int argc, char* argv[]) {
             // Atualize e desenhe as pessoas
             for (int i = 0; i < total_pessoas; i++) {
                 atualizar_pessoa(&pessoas[i],NULL,6);
-                desenhar_pessoa(renderer, &pessoas[i],&anguloX,&anguloY);
+                desenhar_pessoa(renderer, &pessoas[i]);
             }
         }
 

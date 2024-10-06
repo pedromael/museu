@@ -1,6 +1,6 @@
 #include "../cab/desenho.h"
 
-Point2D convert_3D_2D(Point3D p, float *anguloX, float *anguloY) {
+Point2D convert_3D_2D(Point3D p) {
     // Definir o centro do objeto (isso pode ser ajustado dependendo do objeto)
     float centerX = WINDOW_WIDTH / 2.0f;
     float centerY = WINDOW_HEIGHT / 2.0f;
@@ -12,11 +12,11 @@ Point2D convert_3D_2D(Point3D p, float *anguloX, float *anguloY) {
     float z = p.z - centerZ;
 
     // Rotação ao redor do eixo X
-    float y2 = y * cos(*anguloX) - z * sin(*anguloX);
-    float z2 = y * sin(*anguloX) + z * cos(*anguloX);
+    float y2 = y * cos(anguloX) - z * sin(anguloX);
+    float z2 = y * sin(anguloX) + z * cos(anguloX);
 
     // Rotação ao redor do eixo Y
-    float x2 = x * cos(*anguloY) - z2 * sin(*anguloY);
+    float x2 = x * cos(anguloY) - z2 * sin(anguloY);
     //float z3 = x * sin(*anguloY) + z2 * cos(*anguloY);
 
     Point2D p2d;

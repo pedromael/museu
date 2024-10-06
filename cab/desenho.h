@@ -10,6 +10,7 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 
+
 typedef struct
 {
     int x,y;
@@ -20,6 +21,8 @@ typedef struct
     float x,y,z;
 } Point3D;
 
-Point2D convert_3D_2D(Point3D p, float *anguloX, float *anguloY);
+extern float anguloX;
+extern float anguloY;
+Point2D convert_3D_2D(Point3D p);
 
 #endif

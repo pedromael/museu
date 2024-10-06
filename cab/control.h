@@ -4,7 +4,8 @@
 #include <SDL2/SDL.h>
 #include "desenho.h"
 
-// Função para processar eventos e atualizar a posição do quadrado
-int control(float *anguloX, float *anguloY);
+extern float anguloX;
+extern float anguloY;
+int control();
 
 #endif // CONTROL_H
