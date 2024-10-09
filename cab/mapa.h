@@ -2,7 +2,7 @@
 #define MAPA_H
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
-//#include <algorithm>
+
 #include "desenho.h"
 
 typedef struct

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "cab/verificacoes.h"
 #include "cab/control.h"
 #include "cab/desenho.h"
 #include "cab/mapa.h"
@@ -28,14 +29,30 @@ int main(int argc, char* argv[]) {
     SDL_RenderClear(renderer);
 
     // Inicialize as pessoas com direções e velocidades aleatórias
-    int populacao_inicial = 10;
+    int populacao_inicial = 0;
     pessoas = malloc(capacidade * sizeof(pessoa));
 
+    BD_dados_pessoa(0);
+
+    bd_pessoa *dados = malloc(total_pessoas * sizeof(bd_pessoa));
+    for(size_t i = 0; i < total_pessoas; i++){
+        if(i >= capacidade){
+            capacidade *= 2;
+            pessoas = realloc(pessoas, capacidade * sizeof(pessoa));
+        }
+        dados[i] = BD_dados_pessoa(0)[i];
+        pessoas[i].x = dados[i].x;
+        pessoas[i].y = dados[i].y;
+        pessoas[i].id = dados[i].id;
+        pessoas[i].id_pai = dados[i].id_pai;
+        pessoas[i].id_mae = dados[i].id_mae;
+        actualizar_rotina(&pessoas[i],2);
+    }
+    free(dados);
     if (pessoas == NULL) return 1;
-
-    
-
-    for (int i = 0; i < populacao_inicial; i++) {
+    populacao_inicial += total_pessoas;
+    int ii = total_pessoas;
+    for (int i = ii; i < (populacao_inicial); i++) {
         total_pessoas++;
         if (total_pessoas >= capacidade) {
             capacidade *= 2; // Aumenta a capacidade
@@ -55,7 +72,7 @@ int main(int argc, char* argv[]) {
         // Processar eventos
         //printf("entrou em loop principal\n");
         if(!control()) break;
-    
+        control();
         // Limpe a tela
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
@@ -87,7 +104,7 @@ int main(int argc, char* argv[]) {
 
         // Apresente o renderer
         SDL_RenderPresent(renderer);
-        SDL_Delay(16*2); // Aproximadamente 60 FPS
+        SDL_Delay(16); // Aproximadamente 60 FPS
     }
 
     // Libere recursos e feche a SDL

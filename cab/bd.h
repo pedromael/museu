@@ -17,6 +17,7 @@ typedef struct
 } bd_pessoa;
 
 extern int total_pessoas;
+extern int capacidade;
 int BD_nova_pessoa(bd_pessoa dados);
 bd_pessoa* BD_dados_pessoa(int id);
 

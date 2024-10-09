@@ -46,7 +46,7 @@ int BD_nova_pessoa(bd_pessoa dados)
 
     ver = sqlite3_step(stmt);
     if (ver != SQLITE_DONE) return 0;
-
+    capacidade = total_pessoas;
     sqlite3_finalize(stmt);
     sqlite3_close(conn);
 
@@ -55,8 +55,8 @@ int BD_nova_pessoa(bd_pessoa dados)
 
 bd_pessoa* BD_dados_pessoa(int id)
 {
-    int capacidade = 1;
-    bd_pessoa *dados = malloc(capacidade * sizeof(bd_pessoa));
+    int capacidade_dados = 2;
+    bd_pessoa *dados = malloc(capacidade_dados * sizeof(bd_pessoa));
     sqlite3 *conn;
     sqlite3_stmt *stmt;
     const char *sql;
@@ -76,7 +76,6 @@ bd_pessoa* BD_dados_pessoa(int id)
         return dados; // Retorna dados vazios
     }
 
-    int i = 0;
     if (id != 0){
         sqlite3_bind_int(stmt, 1, id);
 
@@ -93,14 +92,15 @@ bd_pessoa* BD_dados_pessoa(int id)
             dados[0].x = sqlite3_column_int(stmt, 7);
             dados[0].y = sqlite3_column_int(stmt, 8);
         } else {
-            printf("Nenhum registro encontrado com o ID fornecido\n");
+            printf("Nenhum registro encontrado\n");
         }
     } else {
+        int i = 0;
         while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-            if (i >= capacidade)
+            if (i >= capacidade_dados)
             {
-                capacidade *= 2;
-                dados = realloc(dados, capacidade * sizeof(bd_pessoa));
+                capacidade_dados *= 2;
+                dados = realloc(dados, capacidade_dados * sizeof(bd_pessoa));
             }
             
             // Processar os dados de cada linha aqui
@@ -116,12 +116,16 @@ bd_pessoa* BD_dados_pessoa(int id)
 
             i++;
         }
+        total_pessoas = --i;
     }
-
-    //total_pessoas = --i;
 
     if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
         printf("Erro ao realizar o SELECT: %s\n", sqlite3_errmsg(conn));
+        if (id == 0)
+        {
+            total_pessoas = 0;
+        }
+        
     }
 
     sqlite3_finalize(stmt);

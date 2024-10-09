@@ -3,36 +3,6 @@
 #include "../cab/mapa.h"
 #include "../cab/accoes.h"
 
-// Verifica se uma área é habitável
-int verificar_habitabilidade(int x, int y, mapa *mapas, int num_mapas) {
-    //parada devido a mudanca no mapa
-    return 1;
-
-    for (int i = 0; i < num_mapas; i++) {
-        mapa *m = &mapas[i];
-        if (!m->habitavel) // Verifica se a área é não habitável
-            if (x >= m->x && x < m->x + m->tx && y >= m->y && y < m->y + m->ty)
-                return 0;
-    }
-    return 1;
-}
-
-// Verifica se há pessoas próximas
-void verificar_pessoa_a_volta(pessoa *pessoa1) {
-    int raio = 10;
-    //printf("verificacao de pessoa a volta:");
-    for (int i = 0; i < total_pessoas; i++) {
-        if (i != pessoa1->id) {
-            int diffX = abs(pessoa1->x - pessoas[i].x);
-            int diffY = abs(pessoa1->y - pessoas[i].y);
-            if (diffX <= raio && diffY <= raio) {
-                interagir(pessoa1, i);
-                break;
-            }
-        }
-    }
-}
-
 char* criar_nome()
 {
     int tamanho = rand() % 11;
@@ -97,23 +67,29 @@ void actualizar_rotina(pessoa *p, int actualizacao_completa) {
     p->tamanho = 4;
     p->velocidade = rand() % 2;
     if (actualizacao_completa) {
-        p->x = (rand() % ((WINDOW_WIDTH + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
-        p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
-
-        bd_pessoa dado;
-
-        dado.id = total_pessoas;
-        dado.genero = calcular_probablidade(45); 
-        strcpy(dado.nome, criar_nome());
-        dado.cor = (Uint8)255;
-        dado.id_pai = 0;
-        dado.id_mae = 0;
-        strcpy(dado.nacionalidade, "angola");
-        dado.x = p->x;
-        dado.y = p->y;
-
-        printf("id- %d nome: %s \n", total_pessoas,dado.nome);
-        BD_nova_pessoa(dado);
+         
+        if(actualizacao_completa == 1){
+            bd_pessoa dado;
+            p->id_mae = 0;
+            p->id_mae = 0;
+            strcpy(dado.nome, criar_nome());
+            dado.cor = (Uint8)255;
+            dado.id_pai = 0;
+            dado.id_mae = 0;
+            strcpy(dado.nacionalidade, "angola");
+            dado.genero = calcular_probablidade(45); 
+            p->x = (rand() % ((WINDOW_WIDTH + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
+            p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
+            dado.x = p->x;
+            dado.y = p->y;
+            dado.id = total_pessoas;
+            BD_nova_pessoa(dado);
+            printf("id- %d nome: %s \n", total_pessoas,dado.nome);
+        }else{
+            printf("dados pego do banco de dados\n");
+        }
+        
+        
 
         Point3D vertices[8] = {
             {p->x, p->y + 4, 0},        // Vértice inferior esquerdo frontal
@@ -132,7 +108,10 @@ void actualizar_rotina(pessoa *p, int actualizacao_completa) {
 
         p->cor = (Uint8)255;  // Cor aleatória
         p->id = total_pessoas;
-    }else verificar_pessoa_a_volta(p);
+    }else {
+        int pessoa_a_volta = verificar_pessoa_a_volta(p);
+        if(pessoa_a_volta) interagir(p, pessoa_a_volta);;
+    }
     
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
     p->dy = (calcular_probablidade(50)) ? -1 : 1;

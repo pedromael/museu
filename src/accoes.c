@@ -21,26 +21,31 @@ void criar_nova_pessoa(pessoa *pai, int mae) {
         filho->y = (pai->y + pessoas[mae].y) / 2; // Posição média dos pais
         filho->tamanho = 4; // Tamanho padrão
         filho->cor = (Uint8)100;
-
+        filho->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
+        filho->dy = (calcular_probablidade(50)) ? -1 : 1;
+        filho->velocidade = rand() % 2;
+        filho->id_pai = pai->id;
+        filho->id_mae = pessoas[mae].id;
         bd_pessoa dado;
 
         dado.id = total_pessoas;
         dado.genero = calcular_probablidade(45); 
         strcpy(dado.nome, criar_nome());
         dado.cor = (Uint8)255;
-        dado.id_pai = 0;
-        dado.id_mae = 0;
+        dado.id_pai = pai->id;
+        dado.id_mae = pessoas[mae].id;
         strcpy(dado.nacionalidade, "angola");
 
         BD_nova_pessoa(dado);
 
-        printf("criado: %d por %d e %d\n", pessoas[total_pessoas].id,pai->id,pessoas[mae].id);
+        //printf("criado: %d por %d e %d\n", pessoas[total_pessoas].id,pai->id,pessoas[mae].id);
     }
 }
 
 void interagir(pessoa *pessoa1, int p2) {
-    if (calcular_probablidade(5)) {
-        //printf("Usuário: %d em x-%d e y-%d acionou %d em x-%d e y-%d\n", pessoa1->id, pessoa1->x, pessoa1->y, pessoas[p2].id, pessoas[p2].x, pessoas[p2].y);
+    if (calcular_probablidade(5) && verificar_se_familia(pessoa1,&pessoas[p2],7) > 6) {
+        printf("%d\n",verificar_se_familia(pessoa1,&pessoas[p2],7));
         criar_nova_pessoa(pessoa1, p2);
     }
+    printf("%d\n",verificar_se_familia(pessoa1,&pessoas[p2],7));
 }

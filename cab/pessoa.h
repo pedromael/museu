@@ -13,7 +13,7 @@ typedef struct {
     int velocidade;
     int dx, dy, dz;
     Uint8 cor;
-    int id;
+    int id, id_pai, id_mae;
 } pessoa;
 
 
@@ -27,6 +27,5 @@ char* criar_nome();
 void desenhar_pessoa(SDL_Renderer *renderer, const pessoa *p);
 void actualizar_rotina(pessoa *p, int actualizacao_completa);
 void atualizar_pessoa(pessoa *p,mapa map[], int num_mapas);
-void verificar_pessoa_a_volta(pessoa *pessoa1);
 
 #endif // PESSOA_H
