@@ -18,7 +18,7 @@ int verificar_habitabilidade(int x, int y, mapa *mapas, int num_mapas) {
 int verificar_pessoa_a_volta(pessoa *pessoa1) {
     int raio = 7;
     //printf("verificacao de pessoa a volta:");
-    for (int i = 0; i < total_pessoas; i++) {
+    for (int i = 0; i < numero_pessoas; i++) {
         if (pessoas[i].id != pessoa1->id) {
             int diffX = (pessoa1->x - pessoas[i].x);
             int diffY = (pessoa1->y - pessoas[i].y);

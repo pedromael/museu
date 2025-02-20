@@ -1,6 +1,7 @@
 #ifndef VERIFICACOES_H
 #define VERIFICACOES_H
 
+#include "index.h"
 #include "pessoa.h"
 
 //extern pessoa *pessoas;

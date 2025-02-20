@@ -1,8 +1,10 @@
-#include <SDL2/SDL.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+int numero_pessoas = 0;
+int capacidade_pessoas = 10; 
+float anguloX = -0.3f;
+float anguloY = 0.3f;
+pessoa *pessoas;
 
+#include "cab/index.h"
 #include "cab/verificacoes.h"
 #include "cab/control.h"
 #include "cab/desenho.h"
@@ -10,12 +12,6 @@
 #include "cab/pessoa.h"
 #include "cab/accoes.h"
 #include "cab/bd.h"
-
-int total_pessoas = 0;
-int capacidade = 10; 
-float anguloX = -0.3f;
-float anguloY = 0.3f;
-pessoa *pessoas;
 
 int main(int argc, char* argv[]) {
     srand(time(NULL));
@@ -28,39 +24,40 @@ int main(int argc, char* argv[]) {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
-    // Inicialize as pessoas com direções e velocidades aleatórias
-    int populacao_inicial = 50;
-    pessoas = malloc(capacidade * sizeof(pessoa));
+    pessoas = malloc(capacidade_pessoas * sizeof(pessoa));
 
-    BD_dados_pessoa(0);
+    BD_dados_pessoa(0); // verificar se existe pessoa na BD: modifica a variavel numeros_pessoas com numero de usuarios encontrados
 
-    bd_pessoa *dados = malloc(total_pessoas * sizeof(bd_pessoa));
-    for(size_t i = 0; i < total_pessoas; i++){
-        if(i >= capacidade){
-            capacidade *= 2;
-            pessoas = realloc(pessoas, capacidade * sizeof(pessoa));
+    bd_pessoa dados;
+    for(size_t i = 0; i < numero_pessoas; i++){
+        if(i >= capacidade_pessoas){
+            capacidade_pessoas *= 2;
+            pessoas = realloc(pessoas, capacidade_pessoas * sizeof(pessoa));
         }
-        dados[i] = BD_dados_pessoa(0)[i];
-        pessoas[i].x = dados[i].x;
-        pessoas[i].y = dados[i].y;
-        pessoas[i].id = dados[i].id;
-        pessoas[i].id_pai = dados[i].id_pai;
-        pessoas[i].id_mae = dados[i].id_mae;
+        dados = BD_dados_pessoa(0)[i];
+        pessoas[i].x = dados.x;
+        pessoas[i].y = dados.y;
+        pessoas[i].id = dados.id;
+        pessoas[i].id_pai = dados.id_pai;
+        pessoas[i].id_mae = dados.id_mae;
         actualizar_rotina(&pessoas[i],2);
     }
+
     free(dados);
+
     if (pessoas == NULL) return 1;
-    populacao_inicial += total_pessoas;
-    int ii = total_pessoas;
-    for (int i = ii; i < (populacao_inicial); i++) {
-        total_pessoas++;
-        if (total_pessoas >= capacidade) {
+
+    populacao_inicial += numero_pessoas;
+    int ii = numero_pessoas;
+    for (int i = ii; i < NUMERO_DE_PESSOAIS_INICIAIS; i++) {
+        numero_pessoas++;
+        if (numero_pessoas >= capacidade) {
             capacidade *= 2; // Aumenta a capacidade
             pessoas = realloc(pessoas, capacidade * sizeof(pessoa));
             if (pessoas == NULL)
                 return 1; 
         }
-        actualizar_rotina(&pessoas[total_pessoas],1);
+        actualizar_rotina(&pessoas[numero_pessoas],1);
     }
 
     // Variável para controlar a frequência da mudança de direção
@@ -86,7 +83,7 @@ int main(int argc, char* argv[]) {
 
         contadorMudancaDirecao++;
         if (contadorMudancaDirecao >= freqMudancaDirecao) {
-            for (int i = 0; i < total_pessoas; i++){
+            for (int i = 0; i < numero_pessoas; i++){
                 //printf("passou");
                 actualizar_rotina(&pessoas[i],0); // Atualiza direção aleatória
                 atualizar_pessoa(&pessoas[i],NULL,6);
@@ -96,7 +93,7 @@ int main(int argc, char* argv[]) {
             //printf("%d - esta no %d-%d indo a %d-%d \n",pes[i].id,pes[i].x,pes[i].y,pes[i].dx,pes[i].dy);
         }else{
             // Atualize e desenhe as pessoas
-            for (int i = 0; i < total_pessoas; i++) {
+            for (int i = 0; i < numero_pessoas; i++) {
                 atualizar_pessoa(&pessoas[i],NULL,6);
                 desenhar_pessoa(renderer, &pessoas[i]);
             }

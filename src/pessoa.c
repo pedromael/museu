@@ -1,7 +1,43 @@
-#include <math.h>
 #include "../cab/pessoa.h"
-#include "../cab/mapa.h"
-#include "../cab/accoes.h"
+
+void criar_pessoa(int pai, int mae) {
+    if (numero_pessoas >= capacidade_pessoas) {
+        capacidade_pessoas *= 2;
+        pessoas = realloc(pessoas, capacidade_pessoas * sizeof(pessoa));
+        //if (*pessoas == NULL) return 1;
+    }
+
+    if (BD_dados_pessoa(pai)[0].genero != BD_dados_pessoa(mae)[0].genero) { // Verifica se os gêneros são opostos
+        numero_pessoas += 1;
+        pessoa *filho = &(pessoas)[numero_pessoas]; // Ponteiro para a nova pessoa
+
+        filho->id = numero_pessoas; // Atribui um ID
+        filho->x = (pai->x + pessoas[mae].x) / 2; // Posição média dos pais
+        filho->y = (pai->y + pessoas[mae].y) / 2; // Posição média dos pais
+        filho->tamanho = 4; // Tamanho padrão
+        filho->cor = (Uint8)100;
+        filho->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1
+        filho->dy = (calcular_probablidade(50)) ? -1 : 1;
+        filho->velocidade = rand() % 2;
+        filho->id_pai = pai->id;
+        filho->id_mae = pessoas[mae].id;
+        bd_pessoa dado;
+
+        dado.id = numero_pessoas;
+        dado.genero = calcular_probablidade(40);
+        strcpy(dado.nome, criar_nome());
+        dado.cor = (Uint8)255;
+        dado.id_pai = pai->id;
+        dado.id_mae = pessoas[mae].id;
+        strcpy(dado.nacionalidade, "angola");
+
+        BD_nova_pessoa(dado);
+
+        //printf("criado: %d por %d e %d\n", pessoas[numero_pessoas].id,pai->id,pessoas[mae].id);
+    }
+
+    numero_pessoas++;
+}
 
 char* criar_nome()
 {
@@ -82,9 +118,9 @@ void actualizar_rotina(pessoa *p, int actualizacao_completa) {
             p->y = (rand() % ((WINDOW_HEIGHT + EX_M * 2) / p->tamanho)) * p->tamanho - EX_M;
             dado.x = p->x;
             dado.y = p->y;
-            dado.id = total_pessoas;
+            dado.id = numero_pessoas;
             BD_nova_pessoa(dado);
-            printf("id- %d nome: %s \n", total_pessoas,dado.nome);
+            printf("id- %d nome: %s \n", numero_pessoas,dado.nome);
         }else{
             printf("dados pego do banco de dados\n");
         }
@@ -107,10 +143,10 @@ void actualizar_rotina(pessoa *p, int actualizacao_completa) {
             p->vertices[i] = vertices[i];
 
         p->cor = (Uint8)255;  // Cor aleatória
-        p->id = total_pessoas;
+        p->id = numero_pessoas;
     }else {
-        int pessoa_a_volta = verificar_pessoa_a_volta(p);
-        if(pessoa_a_volta) interagir(p, pessoa_a_volta);;
+        int pessoa_a_volta = verificar_pessoa_a_volta(p->id);
+        if(pessoa_a_volta) interagir(p->id, pessoa_a_volta);
     }
     
     p->dx = (calcular_probablidade(50)) ? -1 : 1; // Direção aleatória entre -1 e 1

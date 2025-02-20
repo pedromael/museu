@@ -46,7 +46,7 @@ int BD_nova_pessoa(bd_pessoa dados)
 
     ver = sqlite3_step(stmt);
     if (ver != SQLITE_DONE) return 0;
-    capacidade = total_pessoas;
+    capacidade_pessoas = numero_pessoas;
     sqlite3_finalize(stmt);
     sqlite3_close(conn);
 
@@ -55,8 +55,8 @@ int BD_nova_pessoa(bd_pessoa dados)
 
 bd_pessoa* BD_dados_pessoa(int id)
 {
-    int capacidade_dados = 2;
-    bd_pessoa *dados = malloc(capacidade_dados * sizeof(bd_pessoa));
+    int capacidade_pessoas_dados = 2;
+    bd_pessoa *dados = malloc(capacidade_pessoas_dados * sizeof(bd_pessoa));
     sqlite3 *conn;
     sqlite3_stmt *stmt;
     const char *sql;
@@ -97,10 +97,10 @@ bd_pessoa* BD_dados_pessoa(int id)
     } else {
         int i = 0;
         while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-            if (i >= capacidade_dados)
+            if (i >= capacidade_pessoas_dados)
             {
-                capacidade_dados *= 2;
-                dados = realloc(dados, capacidade_dados * sizeof(bd_pessoa));
+                capacidade_pessoas_dados *= 2;
+                dados = realloc(dados, capacidade_pessoas_dados * sizeof(bd_pessoa));
             }
             
             // Processar os dados de cada linha aqui
@@ -116,14 +116,15 @@ bd_pessoa* BD_dados_pessoa(int id)
 
             i++;
         }
-        total_pessoas = --i;
+        numero_pessoas = --i;
     }
 
     if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
         printf("Erro ao realizar o SELECT: %s\n", sqlite3_errmsg(conn));
         if (id == 0)
         {
-            total_pessoas = 0;
+            numero_pessoas = 0;
+            return false;
         }
         
     }

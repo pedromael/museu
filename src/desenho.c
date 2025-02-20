@@ -21,7 +21,6 @@ Point2D convert_3D_2D(Point3D p) {
 
     Point2D p2d;
 
-    // Projeção ortográfica 3D para 2D
     // Após a rotação, transladar de volta para o sistema de coordenadas original
     p2d.x = (int)(x2 + centerX);
     p2d.y = (int)(y2 + centerY);
