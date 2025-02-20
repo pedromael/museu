@@ -1,5 +1,9 @@
 {
-    "files.associations": {
-        "bd.h": "c"
-    }
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "f:\\projectos\\C\\museu",
+            "binaryPath": "f:\\projectos\\C\\museu\\museu",
+            "binaryArgs": []
+        }
+    ]
 }

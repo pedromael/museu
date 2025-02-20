@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     SDL_RenderClear(renderer);
 
     // Inicialize as pessoas com direções e velocidades aleatórias
-    int populacao_inicial = 0;
+    int populacao_inicial = 50;
     pessoas = malloc(capacidade * sizeof(pessoa));
 
     BD_dados_pessoa(0);
